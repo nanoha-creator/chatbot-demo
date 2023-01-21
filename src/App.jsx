@@ -15,11 +15,24 @@ export default class App extends React.Component {
     };
   }
 
+  initAnswer = () =>{
+    const initDataset = this.state.dataset[this.state.currentId];
+    const initAnswers = initDataset.answers;
+    this.setState({
+      answers: initAnswers
+    })
+  }
+
+  componentDidMount(){
+    // 初期化後、データをセット
+    this.initAnswer()
+  }
+
   render() {
     return (
       <section className="c-section">
         <div className="c-box">
-          <AnswersList />
+          <AnswersList answers={this.state.answers}/>
         </div>
       </section>
     );
