@@ -51,9 +51,9 @@ export default class FormDialog extends React.Component {
           label={"お問い合わせ内容（必須）"} multiline={true} rows={5} value={this.state.description} type={"text"} onChange={this.inputDescription} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.handleClose}>Disagree</Button>
+          <Button onClick={this.props.handleClose}>キャンセル</Button>
           <Button onClick={this.props.handleClose} autoFocus>
-            Agree
+            送信する
           </Button>
         </DialogActions>
       </Dialog>
