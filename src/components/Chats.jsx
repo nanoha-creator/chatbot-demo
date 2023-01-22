@@ -11,7 +11,7 @@ const CustomList = styled(List)({
 
 const Chats = (props) => {
   return (
-    <CustomList sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+    <CustomList sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }} id={"scroll-area"}>
       {props.chats.map((chat, index) => {
         return <Chat text={chat.text} type={chat.type} key={index.toString()}/>
       })}

@@ -64,6 +64,14 @@ export default class App extends React.Component {
     this.selectAnswer("", this.state.currentId)
   }
 
+  componentDidUpdate(){
+    // スクロールを一番下に下げる
+    const scrollArea = document.getElementById('scroll-area')
+    if(scrollArea){
+      scrollArea.scrollTop = scrollArea.scrollHeight;
+    }
+  }
+
   render() {
     return (
       <section className="c-section">
