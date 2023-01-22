@@ -65,7 +65,7 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(){
-    // スクロールを一番下に下げる
+    // 最新のチャットが見えるように、スクロール位置を一番下に下げる
     const scrollArea = document.getElementById('scroll-area')
     if(scrollArea){
       scrollArea.scrollTop = scrollArea.scrollHeight;
