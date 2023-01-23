@@ -5,7 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextInput from "./TextInput";
-import { AlternateEmailRounded } from "@mui/icons-material";
+import {WEBHOOK_URL} from '../../webhookConfig'
 
 export default class FormDialog extends React.Component {
   constructor(props) {
@@ -60,7 +60,7 @@ export default class FormDialog extends React.Component {
 
     // バリデーションチェック
     if (this.validateRequiredInput(name, email, description)) {
-      AlternateEmailRounded("必須入力欄が空白です");
+      alert("必須入力欄が空白です");
       return false;
     } else if (!this.validateEmailFormat(email)) {
       alert("メールアドレスの書式が異なります");
