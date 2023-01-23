@@ -1,8 +1,8 @@
 import React from "react";
-import defaultDataset from "./dataset";
 import { AnswersList, Chats } from "./Components/index";
 import FormDialog from "./Components/Forms/FormDialog";
 import "./assets/styles/style.css";
+import { db } from "./Firebase/index";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,12 +11,12 @@ export default class App extends React.Component {
       answers: [],
       chats: [],
       currentId: "init",
-      dataset: defaultDataset,
+      dataset: {},
       open: false,
-    }
-    this.selectAnswer = this.selectAnswer.bind(this)
-    this.handleClickOpen = this.handleClickOpen.bind(this)
-    this.handleClose = this.handleClose.bind(this)
+    };
+    this.selectAnswer = this.selectAnswer.bind(this);
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   displayNextQuestion = (nextQuestionId) => {
@@ -36,32 +36,32 @@ export default class App extends React.Component {
   selectAnswer = (selectedAnswer, nextQuestionId) => {
     switch (true) {
       case nextQuestionId === "init":
-        setTimeout(()=>this.displayNextQuestion(nextQuestionId), 500);
+        setTimeout(() => this.displayNextQuestion(nextQuestionId), 500);
         break;
 
-        case (/^https:*/.test(nextQuestionId)):
-          const a = document.createElement('a');
-          a.href = nextQuestionId;
-          a.target = '_blank';
-          a.click();
-          break;
+      case /^https:*/.test(nextQuestionId):
+        const a = document.createElement("a");
+        a.href = nextQuestionId;
+        a.target = "_blank";
+        a.click();
+        break;
 
-        case nextQuestionId === "contact":
-          this.handleClickOpen();
-          break;
+      case nextQuestionId === "contact":
+        this.handleClickOpen();
+        break;
 
       default:
         const chats = this.state.chats;
         chats.push({
           text: selectedAnswer,
           type: "answer",
-        })
+        });
 
         this.setState({
           chats: chats,
-        })
+        });
 
-        setTimeout(()=>this.displayNextQuestion(nextQuestionId), 1000);
+        setTimeout(() => this.displayNextQuestion(nextQuestionId), 1000);
         break;
     }
   };
@@ -71,7 +71,7 @@ export default class App extends React.Component {
     const initAnswers = initDataset.answers;
     this.setState({
       answers: initAnswers,
-    })
+    });
   };
 
   // お問い合わせモーダルを開状態にする
@@ -88,15 +88,33 @@ export default class App extends React.Component {
     });
   };
 
+  initDataset = (dataset) => {
+    this.setState({ dataset: dataset });
+  };
+
   componentDidMount() {
-    // 初期化後、データをセット
-    this.selectAnswer("", this.state.currentId)
+    // 初期化後、データをセット（非同期）
+    (async () => {
+      const dataset = this.state.dataset;
+      await db
+        .collection("questions")
+        .get()
+        .then((snapshots) => {
+          snapshots.forEach((doc) => {
+            const id = doc.id;
+            const data = doc.data();
+            dataset[id] = data;
+          });
+        });
+      this.initDataset(dataset);
+      this.selectAnswer("", this.state.currentId);
+    })();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     // 最新のチャットが見えるように、スクロール位置を一番下に下げる
-    const scrollArea = document.getElementById('scroll-area')
-    if(scrollArea){
+    const scrollArea = document.getElementById("scroll-area");
+    if (scrollArea) {
       scrollArea.scrollTop = scrollArea.scrollHeight;
     }
   }
@@ -106,8 +124,8 @@ export default class App extends React.Component {
       <section className="c-section">
         <div className="c-box">
           <Chats chats={this.state.chats} />
-          <AnswersList answers={this.state.answers} select={this.selectAnswer}/>
-          <FormDialog open={this.state.open} handleClose={this.handleClose}/>
+          <AnswersList answers={this.state.answers} select={this.selectAnswer} />
+          <FormDialog open={this.state.open} handleClose={this.handleClose} />
         </div>
       </section>
     );
