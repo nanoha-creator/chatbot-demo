@@ -81,7 +81,7 @@ export default class FormDialog extends React.Component {
       };
 
 
-      fetch(url, {
+      fetch(WEBHOOK_URL, {
         method: "POST",
         body: JSON.stringify(payload),
       }).then(() => {
