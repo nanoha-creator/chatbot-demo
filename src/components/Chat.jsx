@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import NoProfile from "../assets/img/no-profile.png";
-import Torahack from "../assets/img/torahack.png";
+import Torahack from "../assets/img/profile.jpeg";
 
 const Chat = (props) => {
     const isQuestion = (props.type === 'question');
