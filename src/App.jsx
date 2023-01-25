@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AnswersList, Chats } from "./Components/index";
 import FormDialog from "./Components/Forms/FormDialog";
-import "./assets/styles/style.css";
+import "./Assets/styles/style.css";
 import { db } from "./Firebase/index";
 
 const App = () => {
@@ -99,4 +99,5 @@ const App = () => {
     </section>
   );
 };
+
 export default App;

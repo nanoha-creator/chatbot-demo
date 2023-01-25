@@ -2,8 +2,8 @@ import React from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import NoProfile from "../assets/img/no-profile.png";
-import Torahack from "../assets/img/profile.jpeg";
+import NoProfile from "../Assets/img/no-profile.png";
+import Torahack from "../Assets/img/profile.jpeg";
 
 const Chat = (props) => {
     const isQuestion = (props.type === 'question');
