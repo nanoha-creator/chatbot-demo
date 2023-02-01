@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AnswersList, Chats } from "./Components/index";
 import FormDialog from "./Components/Forms/FormDialog";
-import "./Assets/styles/style.css";
 import { db } from "./Firebase/index";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 const App = () => {
   const [answers, setAnswers] = useState([]);
@@ -58,7 +59,8 @@ const App = () => {
 
   // お問い合わせモーダルを閉状態にする
   const handleClose = useCallback(() => {
-    setOpen(false)}, [setOpen]);
+    setOpen(false);
+  }, [setOpen]);
 
   useEffect(() => {
     // 初期化後、データをセット（非同期）
@@ -90,8 +92,33 @@ const App = () => {
   });
 
   return (
-    <section className="c-section">
-      <div className="c-box">
+    <section
+      className="c-section"
+      css={css`
+        position: relative;
+        height: 100vh;
+        width: 100%;
+      `}
+    >
+      <div
+        className="c-box"
+        css={css`
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+          border-radius: 4px;
+          box-sizing: border-box;
+          height: 592px;
+          max-width: 432px;
+          padding: 0 1rem;
+          width: 100%;
+
+          /* Vertical and horizontal center alignment */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        `}
+      >
         <Chats chats={chats} />
         <AnswersList answers={answers} select={selectAnswer} />
         <FormDialog open={open} handleClose={handleClose} />
